@@ -123,6 +123,7 @@ const DEFAULTS = {
   customInstructions: '',
   defaultMode: 'general',
   defaultIntensity: 'medium',
+  theme: 'auto',
   provider: 'openrouter',
   providerFormat: 'openai'
 };
@@ -140,6 +141,26 @@ document.addEventListener('DOMContentLoaded', async () => {
   loadDataStats();
 });
 
+function applyTheme(theme) {
+  if (theme === 'auto') {
+    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches) {
+      document.documentElement.setAttribute('data-theme', 'light');
+    } else {
+      document.documentElement.removeAttribute('data-theme');
+    }
+  } else if (theme === 'light') {
+    document.documentElement.setAttribute('data-theme', 'light');
+  } else {
+    document.documentElement.removeAttribute('data-theme');
+  }
+}
+
+window.matchMedia('(prefers-color-scheme: light)').addEventListener('change', () => {
+  if ($('#theme') && $('#theme').value === 'auto') {
+    applyTheme('auto');
+  }
+});
+
 // ─── Load Settings ───────────────────────────────────────────────────────────
 
 async function loadSettings() {
@@ -154,6 +175,9 @@ async function loadSettings() {
   $('#customInstructions').value = settings.customInstructions;
   $('#defaultMode').value = settings.defaultMode;
   $('#defaultIntensity').value = settings.defaultIntensity;
+  if ($('#theme')) $('#theme').value = settings.theme || 'auto';
+
+  applyTheme(settings.theme || 'auto');
 
   // Update provider hint
   const providerConfig = PROVIDERS[$('#provider').value];
@@ -517,6 +541,7 @@ function getCurrentValues() {
     customInstructions: $('#customInstructions').value,
     defaultMode: $('#defaultMode').value,
     defaultIntensity: $('#defaultIntensity').value,
+    theme: $('#theme') ? $('#theme').value : DEFAULTS.theme,
     provider: providerId,
     providerFormat: providerConfig?.format || 'openai'
   };
@@ -547,6 +572,7 @@ async function saveSettings() {
   originalValues = { ...values };
   hasChanges = false;
   $('#saveBar').classList.remove('visible');
+  applyTheme(values.theme);
   showToast('Settings saved! ✨', 'success');
 }
 

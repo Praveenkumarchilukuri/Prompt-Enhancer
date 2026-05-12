@@ -121,6 +121,35 @@
   let selectedMode = 'general';
   let selectedIntensity = 'medium';
 
+  // ─── Apply Theme ─────────────────────────────────────────────────────────
+  function applyTheme(theme) {
+    if (!toolbar) return;
+    if (theme === 'auto') {
+      if (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches) {
+        toolbar.setAttribute('data-pe-theme', 'light');
+      } else {
+        toolbar.removeAttribute('data-pe-theme');
+      }
+    } else if (theme === 'light') {
+      toolbar.setAttribute('data-pe-theme', 'light');
+    } else {
+      toolbar.removeAttribute('data-pe-theme');
+    }
+  }
+
+  // Load theme and listen to media changes
+  window.matchMedia('(prefers-color-scheme: light)').addEventListener('change', () => {
+    chrome.storage.local.get('theme', res => {
+      if ((res.theme || 'auto') === 'auto') applyTheme('auto');
+    });
+  });
+
+  chrome.storage.onChanged.addListener((changes, area) => {
+    if (area === 'local' && changes.theme) {
+      applyTheme(changes.theme.newValue || 'auto');
+    }
+  });
+
   // Detect platform
   for (const [name, config] of Object.entries(PLATFORMS)) {
     if (config.match.test(window.location.hostname)) {
@@ -206,6 +235,11 @@
 
     // Bind events
     bindToolbarEvents(toolbar);
+
+    chrome.storage.local.get('theme', res => {
+      applyTheme(res.theme || 'auto');
+    });
+
     return toolbar;
   }
 

@@ -114,7 +114,17 @@ const TEMPLATES = [
 ];
 
 // ─── Initialize ──────────────────────────────────────────────────────────────
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
+  const res = await chrome.storage.local.get('theme');
+  applyTheme(res.theme || 'auto');
+  
+  window.matchMedia('(prefers-color-scheme: light)').addEventListener('change', async () => {
+    const res = await chrome.storage.local.get('theme');
+    if ((res.theme || 'auto') === 'auto') {
+      applyTheme('auto');
+    }
+  });
+
   initNavigation();
   initModeSelector();
   initIntensitySelector();
@@ -128,6 +138,20 @@ document.addEventListener('DOMContentLoaded', () => {
   initSettings();
   initErrorHandling();
 });
+
+function applyTheme(theme) {
+  if (theme === 'auto') {
+    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches) {
+      document.documentElement.setAttribute('data-theme', 'light');
+    } else {
+      document.documentElement.removeAttribute('data-theme');
+    }
+  } else if (theme === 'light') {
+    document.documentElement.setAttribute('data-theme', 'light');
+  } else {
+    document.documentElement.removeAttribute('data-theme');
+  }
+}
 
 // ─── Navigation ──────────────────────────────────────────────────────────────
 function initNavigation() {

@@ -16,6 +16,30 @@
   --pe-glow: rgba(124, 58, 237, 0.4);
 }
 
+[data-pe-theme="light"] {
+  --pe-bg-dark: rgba(255, 255, 255, 0.97);
+  --pe-bg-dark2: rgba(240, 244, 248, 0.97);
+  --pe-border: rgba(124, 58, 237, 0.15);
+  --pe-text: rgba(30, 41, 59, 0.85);
+  --pe-text-dim: rgba(71, 85, 105, 0.7);
+  --pe-glow: rgba(124, 58, 237, 0.15);
+}
+
+[data-pe-theme="light"] .pe-mode-btn.pe-active { color: white; }
+[data-pe-theme="light"] .pe-int-btn.pe-active { color: white; }
+[data-pe-theme="light"] .pe-close-panel { color: var(--pe-text); border-color: rgba(0,0,0,0.1); }
+[data-pe-theme="light"] .pe-close-panel:hover { background: rgba(0,0,0,0.05); }
+[data-pe-theme="light"] .pe-mode-btn { color: var(--pe-text-dim); border-color: rgba(0,0,0,0.1); background: rgba(0,0,0,0.02); }
+[data-pe-theme="light"] .pe-mode-btn:hover { color: var(--pe-text); background: rgba(124, 58, 237, 0.08); }
+[data-pe-theme="light"] .pe-int-btn { color: var(--pe-text-dim); border-color: rgba(0,0,0,0.1); background: rgba(0,0,0,0.02); }
+[data-pe-theme="light"] .pe-int-btn:hover { color: var(--pe-text); background: rgba(0,0,0,0.05); }
+[data-pe-theme="light"] .pe-panel-header, 
+[data-pe-theme="light"] .pe-panel-section + .pe-panel-section, 
+[data-pe-theme="light"] .pe-actions { border-color: rgba(0,0,0,0.06); }
+[data-pe-theme="light"] .pe-shortcut-hint kbd { border-color: rgba(0,0,0,0.1); background: rgba(0,0,0,0.04); }
+[data-pe-theme="light"] .pe-analyze-btn { color: var(--pe-text); border-color: rgba(0,0,0,0.1); background: rgba(0,0,0,0.02); }
+[data-pe-theme="light"] .pe-analyze-btn:hover { background: rgba(124, 58, 237, 0.1); color: #1e293b; }
+
 /* ─── Toolbar Container (now a positioned wrapper) ────────────────────────── */
 
 #pe-toolbar {

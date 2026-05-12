@@ -51,7 +51,8 @@ Just paste your API key — the provider and available models are detected autom
 - **Re-enhance** — Iteratively improve results
 
 ### Design
-- Premium dark theme with glassmorphism
+- **Theme Support** — Auto (System), Light, or Dark mode
+- Premium aesthetic with glassmorphism
 - Smooth micro-animations
 - Neon purple/cyan accents
 - Compact floating icon UI (not a bar)
@@ -138,8 +139,9 @@ Prompt Enhancer/
 
 ---
 
-## 🔧 API Configuration
+## 🔧 Configuration Options
 
+### API Settings
 | Setting | Default | Description |
 |---------|---------|-------------|
 | API Key | — | Your provider's API key (auto-detects provider) |
@@ -147,6 +149,13 @@ Prompt Enhancer/
 | Base URL | Per provider | API endpoint (auto-filled) |
 | Model | Per provider | Fetched from API — pick from dropdown |
 | Max Tokens | `4096` | Max response length (256–32,000) |
+
+### Preferences
+| Setting | Default | Description |
+|---------|---------|-------------|
+| Theme | `Auto (System)` | UI Appearance. Can be set to Light or Dark manually. |
+| Default Mode | `General` | The default AI enhancement approach. |
+| Default Intensity| `Medium` | The default prompt rewrite level. |
 
 ### Provider API Formats
 - **OpenAI-compatible** (OpenAI, Gemini, Groq, OpenRouter, DeepSeek, Moonshot, Mistral, Together, xAI) — Uses `/chat/completions` with `Bearer` token
