@@ -4,6 +4,8 @@
 
 Just paste your API key — the provider and available models are detected automatically.
 
+![Floating Panel injected into Chat](docs/floating-panel.png)
+
 ---
 
 ## ✨ Features
@@ -33,6 +35,8 @@ Just paste your API key — the provider and available models are detected autom
 - **Auto-detect provider** from API key pattern
 - **Auto-fetch models** from the provider's API — no need to type model names
 - **Searchable model dropdown** with filter to find the right model quickly
+
+![Settings Page with Auto-Detect](docs/settings.png)
 
 ### Platform Integration
 - **Floating ⚡ Icon** — Compact icon on ChatGPT, Claude, Gemini, DeepSeek & Kimi that expands into a full panel
@@ -115,6 +119,8 @@ Prompt Enhancer/
 4. Choose intensity and number of variants
 5. Click **Enhance Prompt**
 6. Copy, Insert into chat, or Save the result
+
+![Main Extension Popup](docs/popup.png)
 
 ### From AI Chat Platforms
 - Visit ChatGPT, Claude, Gemini, DeepSeek, or Kimi
