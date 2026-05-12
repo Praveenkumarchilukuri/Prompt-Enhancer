@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Prompt Enhancer Pro</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+
+<body>
+  <div class="app">
+    <!-- Header -->
+    <header class="header">
+      <div class="header-left">
+        <div class="logo">
+          <span class="logo-icon">⚡</span>
+          <span class="logo-text">Prompt Enhancer <span class="pro-badge">PRO</span></span>
+        </div>
+      </div>
+      <div class="header-right">
+        <button class="icon-btn" id="settingsBtn" title="Settings">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="3" />
+            <path
+              d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z" />
+          </svg>
+        </button>
+      </div>
+    </header>
+
+    <!-- Navigation Tabs -->
+    <nav class="nav-tabs">
+      <button class="nav-tab active" data-view="enhance">
+        <span class="tab-icon">⚡</span> Enhance
+      </button>
+      <button class="nav-tab" data-view="history">
+        <span class="tab-icon">📜</span> History
+      </button>
+      <button class="nav-tab" data-view="templates">
+        <span class="tab-icon">📚</span> Templates
+      </button>
+    </nav>
+
+    <!-- ═══ ENHANCE VIEW ═══ -->
+    <div class="view active" id="enhanceView">
+      <!-- Mode Selector -->
+      <div class="mode-selector">
+        <button class="mode-btn active" data-mode="general" title="General Enhancement">
+          <span class="mode-icon">🎯</span>
+          <span class="mode-label">General</span>
+        </button>
+        <button class="mode-btn" data-mode="coding" title="Code Optimization">
+          <span class="mode-icon">💻</span>
+          <span class="mode-label">Coding</span>
+        </button>
+        <button class="mode-btn" data-mode="creative" title="Creative Writing">
+          <span class="mode-icon">🎨</span>
+          <span class="mode-label">Creative</span>
+        </button>
+        <button class="mode-btn" data-mode="research" title="Research & Analysis">
+          <span class="mode-icon">🔬</span>
+          <span class="mode-label">Research</span>
+        </button>
+        <button class="mode-btn" data-mode="image" title="Image Generation">
+          <span class="mode-icon">🖼️</span>
+          <span class="mode-label">Image</span>
+        </button>
+        <button class="mode-btn" data-mode="custom" title="Custom Rules">
+          <span class="mode-icon">⚙️</span>
+          <span class="mode-label">Custom</span>
+        </button>
+      </div>
+
+      <!-- Custom Instructions (shown only in custom mode) -->
+      <div class="custom-instructions-wrapper hidden" id="customInstructionsWrapper">
+        <textarea id="customInstructions" class="custom-instructions"
+          placeholder="Enter your custom enhancement rules..." rows="2"></textarea>
+      </div>
+
+      <!-- Input Area -->
+      <div class="input-section">
+        <label class="section-label">
+          <span>Your Prompt</span>
+          <span class="token-count" id="tokenCount">0 tokens</span>
+        </label>
+        <textarea id="promptInput" class="prompt-textarea" placeholder="Type or paste your prompt here..."
+          rows="5"></textarea>
+      </div>
+
+      <!-- Controls -->
+      <div class="controls">
+        <div class="control-group">
+          <label class="control-label">Intensity</label>
+          <div class="intensity-selector">
+            <button class="intensity-btn" data-intensity="light">Light</button>
+            <button class="intensity-btn active" data-intensity="medium">Medium</button>
+            <button class="intensity-btn" data-intensity="heavy">Heavy</button>
+          </div>
+        </div>
+        <div class="control-group">
+          <label class="control-label">Variants</label>
+          <div class="variant-selector">
+            <button class="variant-btn active" data-variants="1">1</button>
+            <button class="variant-btn" data-variants="2">2</button>
+            <button class="variant-btn" data-variants="3">3</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Action Buttons -->
+      <div class="action-buttons">
+        <button class="btn btn-primary" id="enhanceBtn">
+          <span class="btn-icon">⚡</span>
+          <span class="btn-text">Enhance Prompt</span>
+          <div class="btn-loader hidden" id="enhanceLoader">
+            <div class="spinner"></div>
+          </div>
+        </button>
+        <button class="btn btn-secondary" id="analyzeBtn" title="Analyze prompt quality">
+          <span class="btn-icon">🔍</span>
+          <span class="btn-text">Analyze</span>
+          <div class="btn-loader hidden" id="analyzeLoader">
+            <div class="spinner"></div>
+          </div>
+        </button>
+      </div>
+
+      <!-- Analysis Result -->
+      <div class="analysis-panel hidden" id="analysisPanel">
+        <div class="analysis-header">
+          <span class="section-label">Prompt Analysis</span>
+          <button class="close-btn" id="closeAnalysis">✕</button>
+        </div>
+        <div class="score-overview">
+          <div class="overall-score" id="overallScore">
+            <svg viewBox="0 0 36 36" class="score-ring">
+              <path class="score-ring-bg"
+                d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+              <path class="score-ring-fill" id="scoreRingFill" stroke-dasharray="0, 100"
+                d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+            </svg>
+            <span class="score-value" id="scoreValue">--</span>
+          </div>
+          <div class="score-bars" id="scoreBars"></div>
+        </div>
+        <div class="analysis-details">
+          <div class="detail-section" id="strengths"></div>
+          <div class="detail-section" id="weaknesses"></div>
+          <div class="detail-section" id="suggestions"></div>
+        </div>
+      </div>
+
+      <!-- Output Area -->
+      <div class="output-section hidden" id="outputSection">
+        <label class="section-label">
+          <span>✨ Enhanced Prompt</span>
+          <div class="variant-nav hidden" id="variantNav">
+            <button class="variant-nav-btn" id="prevVariant">‹</button>
+            <span id="variantIndicator">1/1</span>
+            <button class="variant-nav-btn" id="nextVariant">›</button>
+          </div>
+        </label>
+        <div class="output-text" id="outputText"></div>
+        <div class="output-actions">
+          <button class="action-btn" id="copyBtn" title="Copy to clipboard">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="9" y="9" width="13" height="13" rx="2" />
+              <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
+            </svg>
+            <span>Copy</span>
+          </button>
+          <button class="action-btn" id="insertBtn" title="Insert into active chat">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M12 5v14M5 12h14" />
+            </svg>
+            <span>Insert</span>
+          </button>
+          <button class="action-btn" id="saveBtn" title="Save to favorites">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polygon
+                points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+            </svg>
+            <span>Save</span>
+          </button>
+          <button class="action-btn" id="reenhanceBtn" title="Re-enhance this result">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="23 4 23 10 17 10" />
+              <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10" />
+            </svg>
+            <span>Re-enhance</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Error Display -->
+      <div class="error-panel hidden" id="errorPanel">
+        <span class="error-icon">⚠️</span>
+        <span class="error-text" id="errorText"></span>
+        <button class="close-btn" id="closeError">✕</button>
+      </div>
+    </div>
+
+    <!-- ═══ HISTORY VIEW ═══ -->
+    <div class="view" id="historyView">
+      <div class="history-controls">
+        <div class="search-box">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="11" cy="11" r="8" />
+            <path d="m21 21-4.35-4.35" />
+          </svg>
+          <input type="text" id="historySearch" placeholder="Search history..." class="search-input">
+        </div>
+        <div class="history-actions">
+          <button class="icon-btn" id="exportHistory" title="Export History">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+              <polyline points="7 10 12 15 17 10" />
+              <line x1="12" y1="15" x2="12" y2="3" />
+            </svg>
+          </button>
+          <button class="icon-btn" id="importHistory" title="Import History">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+              <polyline points="17 8 12 3 7 8" />
+              <line x1="12" y1="3" x2="12" y2="15" />
+            </svg>
+          </button>
+          <button class="icon-btn danger" id="clearHistory" title="Clear All History">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="3 6 5 6 21 6" />
+              <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" />
+            </svg>
+          </button>
+        </div>
+      </div>
+      <div class="history-list" id="historyList">
+        <div class="empty-state" id="emptyHistory">
+          <span class="empty-icon">📭</span>
+          <p>No history yet</p>
+          <p class="empty-subtitle">Enhanced prompts will appear here</p>
+        </div>
+      </div>
+      <input type="file" id="importFile" accept=".json" class="hidden">
+    </div>
+
+    <!-- ═══ TEMPLATES VIEW ═══ -->
+    <div class="view" id="templatesView">
+      <div class="templates-grid" id="templatesGrid"></div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <span class="footer-text">Unlimited Usage</span>
+      <span class="shortcut-hint">Ctrl+Shift+E</span>
+    </footer>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+
+</html>

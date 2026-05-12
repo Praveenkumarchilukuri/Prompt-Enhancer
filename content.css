@@ -1,0 +1,526 @@
+/* ═══════════════════════════════════════════════════════════════════════════
+   Prompt Enhancer Pro — Floating Icon + Expandable Panel Styles
+   Compact icon that expands into a panel on AI platforms
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+/* ─── Variables ───────────────────────────────────────────────────────────── */
+
+:root {
+  --pe-purple: #7c3aed;
+  --pe-cyan: #06b6d4;
+  --pe-bg-dark: rgba(15, 15, 35, 0.97);
+  --pe-bg-dark2: rgba(22, 22, 55, 0.97);
+  --pe-border: rgba(124, 58, 237, 0.25);
+  --pe-text: rgba(200, 200, 220, 0.8);
+  --pe-text-dim: rgba(200, 200, 220, 0.5);
+  --pe-glow: rgba(124, 58, 237, 0.4);
+}
+
+/* ─── Toolbar Container (now a positioned wrapper) ────────────────────────── */
+
+#pe-toolbar {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  z-index: 99999;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  margin-bottom: 8px;
+  box-sizing: border-box;
+}
+
+#pe-toolbar * {
+  box-sizing: border-box;
+}
+
+/* ─── Floating Icon Button ────────────────────────────────────────────────── */
+
+.pe-icon-trigger {
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  border: 1px solid var(--pe-border);
+  background: linear-gradient(135deg, var(--pe-bg-dark) 0%, var(--pe-bg-dark2) 100%);
+  color: white;
+  font-size: 18px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow:
+    0 2px 12px rgba(0, 0, 0, 0.3),
+    0 0 12px var(--pe-glow),
+    inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  position: relative;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.pe-icon-trigger::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 12px;
+  background: linear-gradient(135deg, var(--pe-purple), var(--pe-cyan));
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.pe-icon-trigger:hover {
+  transform: scale(1.08);
+  border-color: rgba(124, 58, 237, 0.5);
+  box-shadow:
+    0 4px 20px rgba(0, 0, 0, 0.4),
+    0 0 20px rgba(124, 58, 237, 0.5);
+}
+
+.pe-icon-trigger:hover::before {
+  opacity: 0.2;
+}
+
+.pe-icon-trigger:active {
+  transform: scale(0.95);
+}
+
+.pe-icon-trigger .pe-trigger-icon {
+  position: relative;
+  z-index: 1;
+  filter: drop-shadow(0 0 6px var(--pe-glow));
+  animation: pe-icon-glow 2.5s ease-in-out infinite;
+  line-height: 1;
+}
+
+@keyframes pe-icon-glow {
+  0%, 100% { filter: drop-shadow(0 0 4px rgba(124, 58, 237, 0.4)); }
+  50% { filter: drop-shadow(0 0 12px rgba(124, 58, 237, 0.8)); }
+}
+
+/* Active state when panel is open */
+#pe-toolbar.pe-panel-open .pe-icon-trigger {
+  background: linear-gradient(135deg, var(--pe-purple), var(--pe-cyan));
+  border-color: transparent;
+  box-shadow:
+    0 4px 20px rgba(0, 0, 0, 0.4),
+    0 0 24px rgba(124, 58, 237, 0.6);
+}
+
+#pe-toolbar.pe-panel-open .pe-icon-trigger .pe-trigger-icon {
+  animation: none;
+  filter: drop-shadow(0 0 6px rgba(255, 255, 255, 0.4));
+}
+
+/* ─── Status Dot (shows processing state on icon) ─────────────────────────── */
+
+.pe-status-dot {
+  position: absolute;
+  top: -2px;
+  right: -2px;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #22c55e;
+  border: 2px solid rgba(15, 15, 35, 0.95);
+  z-index: 2;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.pe-status-dot.pe-active {
+  opacity: 1;
+}
+
+.pe-status-dot.pe-processing {
+  opacity: 1;
+  background: #f59e0b;
+  animation: pe-dot-pulse 1s ease-in-out infinite;
+}
+
+@keyframes pe-dot-pulse {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.3); opacity: 0.7; }
+}
+
+/* ─── Expandable Panel ────────────────────────────────────────────────────── */
+
+.pe-panel {
+  position: absolute;
+  bottom: calc(100% + 8px);
+  left: 0;
+  min-width: 340px;
+  background: linear-gradient(135deg, var(--pe-bg-dark) 0%, var(--pe-bg-dark2) 100%);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--pe-border);
+  border-radius: 16px;
+  padding: 0;
+  box-shadow:
+    0 8px 40px rgba(0, 0, 0, 0.5),
+    0 0 20px var(--pe-glow);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(8px) scale(0.95);
+  transform-origin: bottom left;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  pointer-events: none;
+}
+
+#pe-toolbar.pe-panel-open .pe-panel {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0) scale(1);
+  pointer-events: all;
+}
+
+/* Panel Arrow */
+.pe-panel::after {
+  content: '';
+  position: absolute;
+  bottom: -6px;
+  left: 16px;
+  width: 12px;
+  height: 12px;
+  background: var(--pe-bg-dark2);
+  border: 1px solid var(--pe-border);
+  border-top: none;
+  border-left: none;
+  transform: rotate(45deg);
+}
+
+/* ─── Panel Header ────────────────────────────────────────────────────────── */
+
+.pe-panel-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 16px 10px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.pe-brand {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  cursor: default;
+}
+
+.pe-brand-icon {
+  font-size: 16px;
+  filter: drop-shadow(0 0 6px var(--pe-glow));
+  line-height: 1;
+}
+
+.pe-brand-text {
+  font-size: 12px;
+  font-weight: 800;
+  background: linear-gradient(135deg, var(--pe-purple), var(--pe-cyan));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  letter-spacing: 0.3px;
+  white-space: nowrap;
+}
+
+.pe-close-panel {
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 6px;
+  color: var(--pe-text-dim);
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-family: inherit;
+  line-height: 1;
+}
+
+.pe-close-panel:hover {
+  color: var(--pe-text);
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(255, 255, 255, 0.15);
+}
+
+/* ─── Panel Section ───────────────────────────────────────────────────────── */
+
+.pe-panel-section {
+  padding: 12px 16px;
+}
+
+.pe-panel-section + .pe-panel-section {
+  border-top: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+.pe-section-label {
+  font-size: 9px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--pe-text-dim);
+  margin-bottom: 8px;
+  display: block;
+}
+
+/* ─── Mode Buttons ────────────────────────────────────────────────────────── */
+
+.pe-modes {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 4px;
+}
+
+.pe-mode-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  padding: 8px 6px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 8px;
+  color: var(--pe-text-dim);
+  font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+  font-family: inherit;
+}
+
+.pe-mode-btn:hover {
+  color: var(--pe-text);
+  background: rgba(124, 58, 237, 0.08);
+  border-color: rgba(124, 58, 237, 0.15);
+}
+
+.pe-mode-btn.pe-active {
+  color: #fff;
+  background: linear-gradient(135deg, rgba(124, 58, 237, 0.4), rgba(6, 182, 212, 0.2));
+  border-color: rgba(124, 58, 237, 0.4);
+  box-shadow: 0 2px 8px rgba(124, 58, 237, 0.2);
+}
+
+.pe-mode-emoji {
+  font-size: 14px;
+  line-height: 1;
+}
+
+/* ─── Intensity Selector ──────────────────────────────────────────────────── */
+
+.pe-intensity {
+  display: flex;
+  gap: 4px;
+}
+
+.pe-int-btn {
+  flex: 1;
+  padding: 6px 8px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 6px;
+  color: var(--pe-text-dim);
+  font-size: 10px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  text-align: center;
+  font-family: inherit;
+}
+
+.pe-int-btn:hover {
+  color: var(--pe-text);
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.pe-int-btn.pe-active {
+  color: #fff;
+  background: rgba(124, 58, 237, 0.45);
+  border-color: rgba(124, 58, 237, 0.4);
+  box-shadow: 0 1px 6px rgba(124, 58, 237, 0.3);
+}
+
+/* ─── Action Buttons ──────────────────────────────────────────────────────── */
+
+.pe-actions {
+  display: flex;
+  gap: 6px;
+  padding: 12px 16px 14px;
+  border-top: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+.pe-enhance-btn {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 10px 16px;
+  background: linear-gradient(135deg, var(--pe-purple) 0%, var(--pe-cyan) 100%);
+  border: none;
+  border-radius: 10px;
+  color: white;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 3px 14px rgba(124, 58, 237, 0.4);
+  white-space: nowrap;
+  font-family: inherit;
+}
+
+.pe-enhance-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 5px 20px rgba(124, 58, 237, 0.5);
+}
+
+.pe-enhance-btn:active {
+  transform: translateY(0);
+}
+
+.pe-enhance-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.pe-enhance-btn .pe-spinner {
+  display: none;
+}
+
+.pe-enhance-btn.pe-loading .pe-btn-content {
+  display: none;
+}
+
+.pe-enhance-btn.pe-loading .pe-spinner {
+  display: inline-block;
+}
+
+.pe-analyze-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  padding: 10px 14px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  color: var(--pe-text);
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+  font-family: inherit;
+}
+
+.pe-analyze-btn:hover {
+  background: rgba(124, 58, 237, 0.1);
+  border-color: rgba(124, 58, 237, 0.3);
+  color: #e8e8f0;
+}
+
+/* ─── Score Badge ─────────────────────────────────────────────────────────── */
+
+.pe-score-badge {
+  display: none;
+  align-items: center;
+  gap: 4px;
+  padding: 6px 12px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 8px;
+  font-size: 11px;
+  color: var(--pe-text);
+  font-weight: 700;
+  font-family: inherit;
+  margin: 0 16px 4px;
+}
+
+.pe-score-badge.pe-visible {
+  display: flex;
+}
+
+.pe-score-val {
+  background: linear-gradient(135deg, var(--pe-purple), var(--pe-cyan));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-weight: 800;
+}
+
+/* ─── Spinner ─────────────────────────────────────────────────────────────── */
+
+.pe-spinner {
+  width: 14px;
+  height: 14px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-top-color: white;
+  border-radius: 50%;
+  animation: pe-spin 0.6s linear infinite;
+}
+
+@keyframes pe-spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ─── Notification ────────────────────────────────────────────────────────── */
+
+.pe-notification {
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%) translateY(80px);
+  padding: 10px 24px;
+  border-radius: 12px;
+  font-size: 13px;
+  font-weight: 600;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  z-index: 999999;
+  opacity: 0;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+  white-space: nowrap;
+}
+
+.pe-notification.pe-success {
+  background: linear-gradient(135deg, #1a1a3e 0%, #111128 100%);
+  color: #e8e8f0;
+  border: 1px solid rgba(124, 58, 237, 0.4);
+}
+
+.pe-notification.pe-error {
+  background: linear-gradient(135deg, #3e1a1a 0%, #281111 100%);
+  color: #f0e8e8;
+  border: 1px solid rgba(239, 68, 68, 0.4);
+}
+
+.pe-notification.pe-show {
+  transform: translateX(-50%) translateY(0);
+  opacity: 1;
+}
+
+/* ─── Keyboard Shortcut Hint ──────────────────────────────────────────────── */
+
+.pe-shortcut-hint {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 16px 10px;
+  font-size: 10px;
+  color: var(--pe-text-dim);
+  gap: 4px;
+}
+
+.pe-shortcut-hint kbd {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 4px;
+  padding: 1px 5px;
+  font-size: 9px;
+  font-family: inherit;
+  color: var(--pe-text);
+}
