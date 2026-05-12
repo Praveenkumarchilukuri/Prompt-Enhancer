@@ -1,4 +1,4 @@
-# ⚡ Prompt Enhancer Pro
+# ⚡ Prompt Enhancer
 
 > AI-powered Chrome extension for unlimited prompt enhancement. Works with **any AI provider** — OpenAI, Anthropic, Gemini, Groq, OpenRouter, DeepSeek, Mistral, Together AI, xAI & more.
 

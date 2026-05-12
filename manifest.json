@@ -1,6 +1,6 @@
 {
   "manifest_version": 3,
-  "name": "Prompt Enhancer Pro",
+  "name": "Prompt Enhancer",
   "version": "1.0.0",
   "description": "AI-powered prompt enhancement with unlimited usage. Enhance, analyze, and optimize your prompts for any AI platform.",
   "permissions": ["storage", "activeTab", "contextMenus"],

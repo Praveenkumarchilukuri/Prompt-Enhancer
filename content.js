@@ -1,5 +1,5 @@
 // ═══════════════════════════════════════════════════════════════════════════
-// Prompt Enhancer Pro — Content Script
+// Prompt Enhancer — Content Script
 // Injects a toolbar above the chat input on ChatGPT, Claude, Gemini, etc.
 // ═══════════════════════════════════════════════════════════════════════════
 
@@ -168,7 +168,7 @@
     toolbar.id = 'pe-toolbar';
 
     toolbar.innerHTML = `
-      <button class="pe-icon-trigger" id="pe-icon-trigger" title="Prompt Enhancer Pro (Ctrl+Shift+E)">
+      <button class="pe-icon-trigger" id="pe-icon-trigger" title="Prompt Enhancer (Ctrl+Shift+E)">
         <span class="pe-trigger-icon">⚡</span>
         <span class="pe-status-dot" id="pe-status-dot"></span>
       </button>
@@ -177,7 +177,7 @@
         <div class="pe-panel-header">
           <div class="pe-brand">
             <span class="pe-brand-icon">⚡</span>
-            <span class="pe-brand-text">Enhancer Pro</span>
+            <span class="pe-brand-text">Enhancer</span>
           </div>
           <button class="pe-close-panel" id="pe-close-panel" title="Close">✕</button>
         </div>

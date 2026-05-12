@@ -1,11 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Toolbar Preview — Prompt Enhancer Pro</title>
+  <title>Toolbar Preview — Prompt Enhancer</title>
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
     body {
       background: #2b2a27;
       color: #e0ddd5;
@@ -16,25 +22,33 @@
       align-items: center;
       justify-content: center;
     }
+
     .mock-header {
       text-align: center;
       margin-bottom: 40px;
     }
+
     .mock-header h1 {
       font-size: 32px;
       color: #c4bfb2;
       font-weight: 400;
     }
-    .mock-header .icon { font-size: 28px; }
+
+    .mock-header .icon {
+      font-size: 28px;
+    }
+
     .mock-chat-area {
       width: 700px;
       max-width: 90vw;
     }
+
     .mock-input-container {
-      background: rgba(255,255,255,0.08);
+      background: rgba(255, 255, 255, 0.08);
       border-radius: 16px;
       padding: 16px;
     }
+
     .mock-textarea {
       width: 100%;
       background: transparent;
@@ -46,7 +60,11 @@
       min-height: 60px;
       font-family: inherit;
     }
-    .mock-textarea::placeholder { color: rgba(200,200,200,0.4); }
+
+    .mock-textarea::placeholder {
+      color: rgba(200, 200, 200, 0.4);
+    }
+
     .mock-footer {
       display: flex;
       align-items: center;
@@ -54,26 +72,29 @@
       margin-top: 8px;
       padding-top: 8px;
     }
+
     .mock-model {
       font-size: 13px;
-      color: rgba(200,200,200,0.5);
+      color: rgba(200, 200, 200, 0.5);
     }
+
     .preview-label {
       position: fixed;
       top: 20px;
       left: 50%;
       transform: translateX(-50%);
-      background: rgba(124,58,237,0.15);
-      border: 1px solid rgba(124,58,237,0.3);
+      background: rgba(124, 58, 237, 0.15);
+      border: 1px solid rgba(124, 58, 237, 0.3);
       padding: 8px 20px;
       border-radius: 20px;
       font-size: 12px;
-      color: rgba(200,200,220,0.8);
+      color: rgba(200, 200, 220, 0.8);
       font-weight: 600;
     }
   </style>
   <link rel="stylesheet" href="content.css">
 </head>
+
 <body>
   <div class="preview-label">📐 This is a preview of how the toolbar appears above the chat input</div>
 
@@ -87,7 +108,7 @@
     <div id="pe-toolbar">
       <div class="pe-brand">
         <span class="pe-brand-icon">⚡</span>
-        <span class="pe-brand-text">Enhancer Pro</span>
+        <span class="pe-brand-text">Enhancer</span>
       </div>
 
       <div class="pe-modes">
@@ -133,7 +154,8 @@
 
     <!-- Mock chat input (like Claude) -->
     <div class="mock-input-container">
-      <textarea class="mock-textarea" placeholder="How can I help you today?" rows="3">Write me a python script to scrape web data</textarea>
+      <textarea class="mock-textarea" placeholder="How can I help you today?"
+        rows="3">Write me a python script to scrape web data</textarea>
       <div class="mock-footer">
         <span>+</span>
         <span class="mock-model">Sonnet 4.6 Adaptive ▾</span>
@@ -168,4 +190,5 @@
     });
   </script>
 </body>
+
 </html>

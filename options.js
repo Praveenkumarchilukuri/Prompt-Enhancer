@@ -1,5 +1,5 @@
 // ═══════════════════════════════════════════════════════════════════════════
-// Prompt Enhancer Pro — Options Page Logic
+// Prompt Enhancer — Options Page Logic
 // Auto-detects provider from API key, fetches available models
 // ═══════════════════════════════════════════════════════════════════════════
 
